@@ -120,9 +120,7 @@ export const RESOURCE_DETAILS: Record<ResourceType, { label: string; short: stri
 };
 
 export const INITIAL_ADMIN_EMAILS = [
-  'marcio.magalhaes.432@gmail.com',
-  'marxiosmagal@gmail.com',
-  'alunoteresa665@gmail.com'
+  'marcio.magalhaes.432@gmail.com'
 ];
 
 export const DEFAULT_ACCESS_PASSWORD = 'tbs2026';

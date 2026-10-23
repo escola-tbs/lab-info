@@ -22,9 +22,7 @@ service cloud.firestore {
         request.auth.token.email != null &&
         (
           request.auth.token.email in [
-            'marcio.magalhaes.432@gmail.com',
-            'marxiosmagal@gmail.com',
-            'alunoteresa665@gmail.com'
+            'marcio.magalhaes.432@gmail.com'
           ] ||
           (
             exists(/databases/$(database)/documents/system_settings/config) &&
