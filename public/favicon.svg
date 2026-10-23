@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none">
+  <!-- Gradient Definition -->
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#166534" />
+      <stop offset="100%" stop-color="#15803d" />
+    </linearGradient>
+    <linearGradient id="screenGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0f172a" />
+      <stop offset="100%" stop-color="#1e293b" />
+    </linearGradient>
+  </defs>
+
+  <!-- Squircle Background -->
+  <rect width="64" height="64" rx="16" fill="url(#bgGrad)" />
+
+  <!-- Monitor Body Outer -->
+  <rect x="11" y="11" width="42" height="30" rx="4" fill="#ffffff" />
+
+  <!-- Inner Display Screen -->
+  <rect x="14" y="14" width="36" height="24" rx="2" fill="url(#screenGrad)" />
+
+  <!-- Terminal / Code prompt icon on screen -->
+  <path d="M20 22 L26 26 L20 30" stroke="#38bdf8" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" />
+  <line x1="29" y1="30" x2="38" y2="30" stroke="#4ade80" stroke-width="2.5" stroke-linecap="round" />
+
+  <!-- Monitor Stand -->
+  <path d="M28 41 L27 47 L37 47 L36 41 Z" fill="#ffffff" />
+  <rect x="23" y="47" width="18" height="4" rx="2" fill="#ffffff" />
+
+  <!-- Small accent indicator dot -->
+  <circle cx="50" cy="14" r="3" fill="#22c55e" />
+</svg>

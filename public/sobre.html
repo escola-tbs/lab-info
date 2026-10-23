@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sobre o Sistema - Laboratório de Informática TBS</title>
+  <link rel="icon" type="image/svg+xml" href="./favicon.svg" />
+  <style>
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      line-height: 1.6;
+      color: #334155;
+      background-color: #f8fafc;
+      margin: 0;
+      padding: 24px;
+    }
+    .container {
+      max-width: 780px;
+      margin: 0 auto;
+      background: #ffffff;
+      padding: 32px;
+      border-radius: 16px;
+      box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05), 0 2px 4px -2px rgba(0,0,0,0.05);
+      border: 1px solid #e2e8f0;
+    }
+    h1 {
+      color: #14532d;
+      font-size: 24px;
+      margin-top: 12px;
+      margin-bottom: 8px;
+      border-bottom: 2px solid #bbf7d0;
+      padding-bottom: 12px;
+    }
+    h2 {
+      color: #166534;
+      font-size: 18px;
+      margin-top: 28px;
+      margin-bottom: 8px;
+    }
+    p, li {
+      font-size: 15px;
+      color: #334155;
+    }
+    ul {
+      padding-left: 20px;
+      margin-top: 8px;
+    }
+    li {
+      margin-bottom: 6px;
+    }
+    .badge {
+      display: inline-block;
+      background-color: #dcfce7;
+      color: #15803d;
+      font-weight: 600;
+      font-size: 12px;
+      padding: 4px 12px;
+      border-radius: 9999px;
+      margin-bottom: 12px;
+    }
+    .btn-back {
+      display: inline-flex;
+      align-items: center;
+      padding: 9px 16px;
+      background-color: #166534;
+      color: #ffffff;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 14px;
+      border-radius: 8px;
+      transition: background-color 0.15s ease, transform 0.1s ease;
+      box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+    }
+    .btn-back:hover {
+      background-color: #14532d;
+      transform: translateY(-1px);
+    }
+    .btn-back:active {
+      transform: translateY(0);
+    }
+    .card-highlight {
+      background-color: #f0fdf4;
+      border: 1px solid #bbf7d0;
+      border-radius: 12px;
+      padding: 16px 20px;
+      margin: 20px 0;
+    }
+    .card-highlight p {
+      margin: 0;
+      color: #166534;
+      font-weight: 500;
+      font-size: 14px;
+    }
+    .grid-features {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 12px;
+      margin-top: 12px;
+    }
+    @media (min-width: 600px) {
+      .grid-features {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+    .feature-box {
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-radius: 10px;
+      padding: 14px;
+    }
+    .feature-box strong {
+      color: #14532d;
+      display: block;
+      margin-bottom: 4px;
+      font-size: 14px;
+    }
+    .feature-box span {
+      font-size: 13px;
+      color: #64748b;
+      display: block;
+      line-height: 1.4;
+    }
+    footer {
+      margin-top: 36px;
+      padding-top: 20px;
+      border-top: 1px solid #e2e8f0;
+      font-size: 13px;
+      color: #64748b;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div style="margin-bottom: 20px;">
+      <a href="./" class="btn-back">
+        <svg style="width: 16px; height: 16px; margin-right: 6px; display: inline-block; vertical-align: middle;" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
+        Voltar para a Página Inicial
+      </a>
+    </div>
+
+    <span class="badge">E.E.E.F.M. Prof. Terezinha Bezerra Siqueira &bull; PIBID UFRA</span>
+    <h1>Sobre o Sistema de Reservas do Laboratório</h1>
+
+    <div class="card-highlight">
+      <p>
+        Plataforma oficial para consulta e agendamento dos recursos de informática da Escola Estadual Profª Terezinha Bezerra Siqueira (TBS), desenvolvida no âmbito do PIBID/UFRA para apoiar a prática pedagógica dos professores.
+      </p>
+    </div>
+
+    <h2>1. O Que É o Sistema</h2>
+    <p>
+      O <strong>Sistema de Reservas do Laboratório de Informática</strong> é uma aplicação web progressiva (PWA) criada para solucionar a sobreposição de horários e facilitar o planejamento pedagógico na utilização das tecnologias digitais na escola.
+    </p>
+    <p>
+      Com a plataforma, qualquer docente ou bolsista pode consultar os horários em tempo real pelo celular ou computador, realizar reservas seguras e negociar eventuais ajustes diretamente pelo WhatsApp.
+    </p>
+
+    <h2>2. Recursos Disponíveis para Agendamento</h2>
+    <ul>
+      <li><strong>🖥️ + 💻 Laboratório + Chromebooks:</strong> Reserva completa do espaço físico climatizado e de todos os computadores e equipamentos portáteis para atividades integradas.</li>
+      <li><strong>🖥️ Apenas Laboratório de Informática:</strong> Reserva exclusiva do espaço físico, mantendo o carrinho de Chromebooks liberado para uso em outras salas de aula.</li>
+      <li><strong>💻 Apenas Carrinho de Chromebooks:</strong> Permite levar os computadores portáteis para a sala de aula regular, deixando o espaço físico do laboratório livre para outro professor.</li>
+    </ul>
+
+    <h2>3. Principais Funcionalidades</h2>
+    <div class="grid-features">
+      <div class="feature-box">
+        <strong>📅 Consulta Pública em Tempo Real</strong>
+        <span>Disponibilidade dos horários aberta para visualização de toda a comunidade escolar, sem necessidade de login prévio.</span>
+      </div>
+      <div class="feature-box">
+        <strong>🔒 Prevenção Atômica de Conflitos</strong>
+        <span>Garantia de que nenhum horário ou recurso seja reservado em duplicidade, mesmo em acessos simultâneos.</span>
+      </div>
+      <div class="feature-box">
+        <strong>🔑 Senha Institucional da Escola</strong>
+        <span>Camada de proteção para garantir que apenas servidores e colaboradores autorizados da escola registrem novos agendamentos.</span>
+      </div>
+      <div class="feature-box">
+        <strong>💬 Negociação Ágil via WhatsApp</strong>
+        <span>Geração automática de mensagem respeitosa e contextualizada com data e horário para alinhamento entre professores.</span>
+      </div>
+      <div class="feature-box">
+        <strong>🔔 Notificações para a Administração</strong>
+        <span>Alertas nativos com sinal sonoro avisando coordenadores e bolsistas sempre que uma nova reserva for confirmada.</span>
+      </div>
+      <div class="feature-box">
+        <strong>📲 Instalação no Celular (PWA)</strong>
+        <span>Instalação rápida direto no Android, iPhone ou PC com rotação de tela (vertical e horizontal) e alta velocidade.</span>
+      </div>
+    </div>
+
+    <h2>4. Realização Institucional</h2>
+    <ul>
+      <li><strong>Escola Estadual de Ensino Fundamental e Médio Profª Terezinha Bezerra Siqueira (TBS):</strong> Gestão escolar, corpo docente e equipe pedagógica.</li>
+      <li><strong>PIBID - Programa Institucional de Bolsa de Iniciação à Docência:</strong> Iniciativa da CAPES com o subprojeto de Computação da <strong>Universidade Federal Rural da Amazônia (UFRA)</strong>.</li>
+    </ul>
+
+    <div style="margin-top: 36px; padding-top: 20px; border-top: 1px solid #e2e8f0; text-align: center;">
+      <a href="./" class="btn-back">
+        <svg style="width: 16px; height: 16px; margin-right: 6px; display: inline-block; vertical-align: middle;" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
+        Voltar para a Página Inicial
+      </a>
+    </div>
+
+    <footer>
+      Sistema de Reservas &bull; E.E.E.F.M. Prof. Terezinha Bezerra Siqueira &bull; Capitão Poço/PA &bull; 2026
+    </footer>
+  </div>
+</body>
+</html>
