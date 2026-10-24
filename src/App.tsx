@@ -46,7 +46,28 @@ import {
   CheckCircle2
 } from 'lucide-react';
 
+const AUTH_CACHE_KEY = 'tbs_auth_cached_user';
+
+interface CachedAuthUser {
+  uid: string;
+  displayName: string | null;
+  email: string | null;
+  photoURL?: string | null;
+  role?: 'admin' | 'user';
+  isAdmin?: boolean;
+}
+
 export default function App() {
+  // Optimistic cached auth to eliminate login button flicker on page load
+  const [cachedUser, setCachedUser] = useState<CachedAuthUser | null>(() => {
+    try {
+      const saved = localStorage.getItem(AUTH_CACHE_KEY);
+      return saved ? JSON.parse(saved) : null;
+    } catch {
+      return null;
+    }
+  });
+
   // Current user & profile
   const [currentUser, setCurrentUser] = useState<FirebaseUser | null>(null);
   const [userProfile, setUserProfile] = useState<UserProfile | null>(null);
@@ -139,6 +160,25 @@ export default function App() {
 
       if (user) {
         setIsAuthModalOpen(false);
+        const currentAdmins = (systemSettings?.adminEmails || INITIAL_ADMIN_EMAILS).map((e) =>
+          e.toLowerCase()
+        );
+        const userEmailLower = user.email?.toLowerCase() || '';
+        const isUserAdmin = currentAdmins.includes(userEmailLower);
+
+        // Immediate cache snapshot to ensure instant recognition on subsequent reloads
+        const initialCache: CachedAuthUser = {
+          uid: user.uid,
+          displayName: user.displayName || user.email?.split('@')[0] || 'Usuário',
+          email: userEmailLower,
+          photoURL: user.photoURL,
+          isAdmin: isUserAdmin
+        };
+        try {
+          localStorage.setItem(AUTH_CACHE_KEY, JSON.stringify(initialCache));
+        } catch {}
+        setCachedUser(initialCache);
+
         let activeProfile: UserProfile | null = null;
         // Fetch user profile from Firestore
         try {
@@ -149,21 +189,36 @@ export default function App() {
             if (!profile.email && user.email) {
               await saveUserProfile({ ...profile, email: user.email.toLowerCase() });
             }
+            const refinedCache: CachedAuthUser = {
+              ...initialCache,
+              displayName: profile.displayName || initialCache.displayName,
+              role: profile.role,
+              isAdmin: isUserAdmin || profile.role === 'admin'
+            };
+            try {
+              localStorage.setItem(AUTH_CACHE_KEY, JSON.stringify(refinedCache));
+            } catch {}
+            setCachedUser(refinedCache);
           } else {
             // First time login: create profile and register user in collection without forcing modal popup
-            const currentAdmins = (systemSettings?.adminEmails || INITIAL_ADMIN_EMAILS).map((e) =>
-              e.toLowerCase()
-            );
-            const userEmailLower = user.email?.toLowerCase() || '';
             const draftProfile: UserProfile = {
               uid: user.uid,
               displayName: user.displayName || user.email?.split('@')[0] || 'Usuário',
               email: userEmailLower,
               whatsapp: '',
-              role: currentAdmins.includes(userEmailLower) ? 'admin' : 'user'
+              role: isUserAdmin ? 'admin' : 'user'
             };
             setUserProfile(draftProfile);
             activeProfile = draftProfile;
+            const refinedCache: CachedAuthUser = {
+              ...initialCache,
+              role: draftProfile.role,
+              isAdmin: isUserAdmin
+            };
+            try {
+              localStorage.setItem(AUTH_CACHE_KEY, JSON.stringify(refinedCache));
+            } catch {}
+            setCachedUser(refinedCache);
             // Auto save initial user doc so admin sees them in the user selection list right away
             await saveUserProfile(draftProfile);
           }
@@ -190,6 +245,10 @@ export default function App() {
         }
       } else {
         setUserProfile(null);
+        try {
+          localStorage.removeItem(AUTH_CACHE_KEY);
+        } catch {}
+        setCachedUser(null);
       }
     });
 
@@ -215,12 +274,31 @@ export default function App() {
     return () => unsub();
   }, []);
 
-  // Check if current user is admin
-  const userEmail = currentUser?.email?.toLowerCase() || '';
+  // Check if current user is admin (checking live auth or fallback to cached state)
+  const userEmail = currentUser?.email?.toLowerCase() || cachedUser?.email?.toLowerCase() || '';
   const adminList = (systemSettings?.adminEmails || INITIAL_ADMIN_EMAILS).map((e) =>
     e.toLowerCase()
   );
-  const isAdminUser = !!currentUser && (adminList.includes(userEmail) || userProfile?.role === 'admin');
+  const isAdminUser = currentUser
+    ? (adminList.includes(userEmail) || userProfile?.role === 'admin')
+    : Boolean(cachedUser?.isAdmin || (cachedUser?.email && adminList.includes(cachedUser.email.toLowerCase())));
+
+  // Effective user for Header: uses live user when available, or cached user during initial load
+  const effectiveUser = currentUser
+    ? {
+        uid: currentUser.uid,
+        displayName: userProfile?.displayName || currentUser.displayName || cachedUser?.displayName || null,
+        email: currentUser.email || cachedUser?.email || null,
+        photoURL: currentUser.photoURL || cachedUser?.photoURL || null,
+      }
+    : cachedUser
+    ? {
+        uid: cachedUser.uid,
+        displayName: cachedUser.displayName,
+        email: cachedUser.email,
+        photoURL: cachedUser.photoURL,
+      }
+    : null;
 
   // Admin Notification Hook (strictly active for admin users only)
   const {
@@ -268,6 +346,12 @@ export default function App() {
   // Logout handler
   const handleLogout = async () => {
     try {
+      try {
+        localStorage.removeItem(AUTH_CACHE_KEY);
+      } catch {}
+      setCachedUser(null);
+      setCurrentUser(null);
+      setUserProfile(null);
       await signOut(auth);
       showToast('Sessão encerrada com sucesso.');
     } catch (err) {
@@ -350,7 +434,7 @@ export default function App() {
 
       {/* Main Header */}
       <Header
-        user={currentUser}
+        user={effectiveUser}
         isAdmin={isAdminUser}
         onLogin={handleLogin}
         onRequestLogout={() => setIsLogoutModalOpen(true)}
@@ -505,7 +589,7 @@ export default function App() {
         isOpen={isMyReservationsModalOpen}
         onClose={() => setIsMyReservationsModalOpen(false)}
         reservations={allReservations}
-        currentUserId={currentUser?.uid || ''}
+        currentUserId={currentUser?.uid || cachedUser?.uid || ''}
         onEditReservation={(res) => {
           setEditingReservation(res);
           setIsEditModalOpen(true);
@@ -522,9 +606,21 @@ export default function App() {
           setIsFirstAccessModal(false);
         }}
         userProfile={userProfile}
-        photoURL={currentUser?.photoURL}
+        photoURL={currentUser?.photoURL || cachedUser?.photoURL}
         onProfileUpdated={(updated) => {
           setUserProfile(updated);
+          if (cachedUser) {
+            const updatedCache: CachedAuthUser = {
+              ...cachedUser,
+              displayName: updated.displayName,
+              role: updated.role,
+              isAdmin: updated.role === 'admin' || cachedUser.isAdmin
+            };
+            try {
+              localStorage.setItem(AUTH_CACHE_KEY, JSON.stringify(updatedCache));
+            } catch {}
+            setCachedUser(updatedCache);
+          }
           showToast('Perfil atualizado com sucesso.');
           if (isFirstAccessModal) {
             setIsFirstAccessModal(false);
