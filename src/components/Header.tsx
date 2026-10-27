@@ -82,7 +82,7 @@ export const Header: React.FC<HeaderProps> = ({
         <div className="flex items-center justify-between py-2 sm:py-0 sm:h-20 gap-2">
           {/* School Brand & PIBID Badge with Interactive App Icon Menu */}
           <div className="flex items-center space-x-2.5 sm:space-x-3 min-w-0 flex-1">
-            <div className="relative" ref={menuContainerRef}>
+            <div className="relative shrink-0" ref={menuContainerRef}>
               <button
                 type="button"
                 onClick={() => setIsAppMenuOpen((prev) => !prev)}
@@ -173,16 +173,16 @@ export const Header: React.FC<HeaderProps> = ({
 
             {/* Header Text: Always visible, truncating with ellipsis (...) when space is constrained */}
             <div className="min-w-0 flex-1 overflow-hidden">
-              <div className="flex items-center gap-1.5 flex-nowrap overflow-hidden">
-                <span className="text-[10px] sm:text-xs font-semibold px-1.5 sm:px-2 py-0.5 rounded-full bg-green-100 text-green-800 tracking-wide uppercase whitespace-nowrap shrink-0">
+              <div className="flex items-center gap-1.5 min-w-0 overflow-hidden">
+                <span className="text-[10px] sm:text-xs font-semibold px-2 py-0.5 rounded-full bg-green-100 text-green-800 tracking-wide uppercase truncate max-w-full">
                   RESERVAS
                 </span>
                 <span className="text-[10px] sm:text-xs text-slate-500 hidden md:inline truncate">EEEFM Prof. TBS</span>
               </div>
-              <h1 className="text-xs sm:text-base md:text-lg lg:text-xl font-bold text-slate-900 leading-tight truncate">
+              <h1 className="text-sm sm:text-base md:text-lg lg:text-xl font-bold text-slate-900 leading-tight truncate">
                 Laboratório de Informática
               </h1>
-              <p className="text-[9px] sm:text-xs text-slate-500 truncate block">
+              <p className="text-[10px] sm:text-xs text-slate-500 truncate block">
                 Agenda Oficial de Reservas do Laboratório e Chromebooks
               </p>
             </div>
@@ -193,11 +193,11 @@ export const Header: React.FC<HeaderProps> = ({
             {/* Nova Reserva Button: Hidden on mobile when at the top, shown when hero button disappears */}
             <button
               onClick={onOpenNewReservation}
-              className={`items-center gap-1 sm:gap-2 px-2.5 sm:px-4 py-1.5 sm:py-2.5 bg-green-700 hover:bg-green-800 text-white text-xs sm:text-sm font-semibold rounded-lg shadow-sm transition-all focus:ring-2 focus:ring-green-600 focus:ring-offset-2 active:scale-95 cursor-pointer whitespace-nowrap shrink-0 ${
+              className={`items-center gap-1.5 sm:gap-2 px-3 sm:px-4 py-2 sm:py-2.5 bg-green-700 hover:bg-green-800 text-white text-xs sm:text-sm font-semibold rounded-lg shadow-sm transition-all focus:ring-2 focus:ring-green-600 focus:ring-offset-2 active:scale-95 cursor-pointer whitespace-nowrap ${
                 isScrolledPastHero ? 'inline-flex' : 'hidden sm:inline-flex'
               }`}
             >
-              <CalendarCheck className="w-3.5 h-3.5 sm:w-4 sm:h-4 shrink-0" />
+              <CalendarCheck className="w-4 h-4 shrink-0" />
               <span>Nova Reserva</span>
             </button>
 
