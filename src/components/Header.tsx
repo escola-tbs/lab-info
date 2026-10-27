@@ -3,14 +3,12 @@ import {
   LogIn,
   LogOut,
   Shield,
-  CalendarCheck,
   UserCircle,
   Laptop,
   School,
   QrCode,
   Info,
-  ShieldCheck,
-  ChevronDown
+  ShieldCheck
 } from 'lucide-react';
 
 interface HeaderProps {
@@ -26,9 +24,7 @@ interface HeaderProps {
   onOpenMyReservations: () => void;
   onOpenProfile: () => void;
   onOpenAdmin: () => void;
-  onOpenNewReservation: () => void;
   onOpenShare: () => void;
-  isScrolledPastHero?: boolean;
 }
 
 export const Header: React.FC<HeaderProps> = ({
@@ -39,9 +35,7 @@ export const Header: React.FC<HeaderProps> = ({
   onOpenMyReservations,
   onOpenProfile,
   onOpenAdmin,
-  onOpenNewReservation,
   onOpenShare,
-  isScrolledPastHero = false,
 }) => {
   const [isAppMenuOpen, setIsAppMenuOpen] = useState(false);
   const menuContainerRef = useRef<HTMLDivElement>(null);
@@ -190,17 +184,6 @@ export const Header: React.FC<HeaderProps> = ({
 
           {/* Right Actions */}
           <div className="flex items-center gap-1.5 sm:gap-2.5 shrink-0">
-            {/* Nova Reserva Button: Hidden on mobile when at the top, shown when hero button disappears */}
-            <button
-              onClick={onOpenNewReservation}
-              className={`items-center gap-1.5 sm:gap-2 px-3 sm:px-4 py-2 sm:py-2.5 bg-green-700 hover:bg-green-800 text-white text-xs sm:text-sm font-semibold rounded-lg shadow-sm transition-all focus:ring-2 focus:ring-green-600 focus:ring-offset-2 active:scale-95 cursor-pointer whitespace-nowrap ${
-                isScrolledPastHero ? 'inline-flex' : 'hidden sm:inline-flex'
-              }`}
-            >
-              <CalendarCheck className="w-4 h-4 shrink-0" />
-              <span>Nova Reserva</span>
-            </button>
-
             {user ? (
               <div className="flex items-center gap-1 sm:gap-1.5">
                 {/* Minhas Reservas */}

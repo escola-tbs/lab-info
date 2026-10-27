@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   signInWithPopup,
   signOut,
@@ -116,10 +116,6 @@ export default function App() {
   // Logout confirmation modal
   const [isLogoutModalOpen, setIsLogoutModalOpen] = useState(false);
 
-  // Ref and state to track when the hero "Fazer Reserva Agora" button disappears on scroll
-  const heroReserveBtnRef = useRef<HTMLButtonElement | null>(null);
-  const [isHeroReserveVisible, setIsHeroReserveVisible] = useState(true);
-
   // Success Toast Banner
   const [toastMessage, setToastMessage] = useState<string | null>(null);
 
@@ -134,22 +130,6 @@ export default function App() {
   useEffect(() => {
     testConnection();
     getSystemSettings().then((s) => setSystemSettings(s));
-  }, []);
-
-  // Track when hero button scrolls out of view on mobile
-  useEffect(() => {
-    const target = heroReserveBtnRef.current;
-    if (!target) return;
-
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        setIsHeroReserveVisible(entry.isIntersecting);
-      },
-      { threshold: 0.1 }
-    );
-
-    observer.observe(target);
-    return () => observer.disconnect();
   }, []);
 
   // Listen to Auth state
@@ -444,9 +424,7 @@ export default function App() {
           setIsProfileModalOpen(true);
         }}
         onOpenAdmin={() => setIsAdminModalOpen(true)}
-        onOpenNewReservation={() => handleOpenNewReservation()}
         onOpenShare={() => setIsShareModalOpen(true)}
-        isScrolledPastHero={!isHeroReserveVisible}
       />
 
       {/* Main Content Area */}
@@ -471,7 +449,6 @@ export default function App() {
             </div>
 
             <button
-              ref={heroReserveBtnRef}
               onClick={() => handleOpenNewReservation()}
               className="px-5 py-2.5 bg-white text-green-900 hover:bg-green-50 font-bold text-sm rounded-xl shadow-md transition-all active:scale-95 shrink-0 flex items-center gap-2 cursor-pointer"
             >

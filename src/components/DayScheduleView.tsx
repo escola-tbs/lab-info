@@ -8,7 +8,6 @@ import {
   Plus,
   Laptop,
   MonitorCheck,
-  Check,
   User as UserIcon,
   Sparkles
 } from 'lucide-react';
