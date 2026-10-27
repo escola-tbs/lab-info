@@ -180,16 +180,16 @@ export const DateNavigator: React.FC<DateNavigatorProps> = ({
   };
 
   return (
-    <div className="bg-white rounded-2xl border-2 border-slate-300/80 shadow-xs p-3 sm:p-5 mb-6">
+    <div className="bg-white dark:bg-slate-900 rounded-2xl border-2 border-slate-300/80 dark:border-slate-800 shadow-xs p-3 sm:p-5 mb-6 transition-colors duration-200">
       <div className="flex flex-col lg:flex-row items-center justify-between gap-3 sm:gap-4">
         {/* Left: Date Switcher & Day Info */}
         <div className="flex flex-wrap items-center justify-between sm:justify-start gap-2 w-full lg:w-auto">
           {/* Day Navigation Controls */}
-          <div className="flex items-center bg-slate-100 rounded-xl p-1 border border-slate-300/70">
+          <div className="flex items-center bg-slate-100 dark:bg-slate-800 rounded-xl p-1 border border-slate-300/70 dark:border-slate-700">
             <button
               onClick={handlePrevDay}
               title="Dia anterior"
-              className="p-1.5 sm:p-2 hover:bg-white text-slate-700 hover:text-green-700 rounded-lg transition-all shadow-2xs hover:shadow-xs active:scale-95 cursor-pointer"
+              className="p-1.5 sm:p-2 hover:bg-white dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 hover:text-green-700 dark:hover:text-green-400 rounded-lg transition-all shadow-2xs hover:shadow-xs active:scale-95 cursor-pointer"
             >
               <ChevronLeft className="w-4 h-4 sm:w-5 sm:h-5" />
             </button>
@@ -198,7 +198,7 @@ export const DateNavigator: React.FC<DateNavigatorProps> = ({
               className={`px-2.5 sm:px-3 py-1.5 text-xs font-semibold rounded-lg transition-all cursor-pointer ${
                 isToday
                   ? 'bg-green-700 text-white shadow-xs'
-                  : 'text-slate-600 hover:text-slate-900 hover:bg-white'
+                  : 'text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white hover:bg-white dark:hover:bg-slate-700'
               }`}
             >
               Hoje
@@ -206,7 +206,7 @@ export const DateNavigator: React.FC<DateNavigatorProps> = ({
             <button
               onClick={handleNextDay}
               title="Próximo dia"
-              className="p-1.5 sm:p-2 hover:bg-white text-slate-700 hover:text-green-700 rounded-lg transition-all shadow-2xs hover:shadow-xs active:scale-95 cursor-pointer"
+              className="p-1.5 sm:p-2 hover:bg-white dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 hover:text-green-700 dark:hover:text-green-400 rounded-lg transition-all shadow-2xs hover:shadow-xs active:scale-95 cursor-pointer"
             >
               <ChevronRight className="w-4 h-4 sm:w-5 sm:h-5" />
             </button>
@@ -215,7 +215,7 @@ export const DateNavigator: React.FC<DateNavigatorProps> = ({
           {/* Formatted Date & Weekday */}
           <div
             ref={triggerRef}
-            className="relative flex items-center gap-2 sm:gap-3 bg-slate-50 hover:bg-slate-100/70 border border-slate-300 px-2.5 sm:px-3.5 py-1.5 rounded-xl shrink-0 transition-colors shadow-2xs"
+            className="relative flex items-center gap-2 sm:gap-3 bg-slate-50 dark:bg-slate-800/80 hover:bg-slate-100/70 dark:hover:bg-slate-800 border border-slate-300 dark:border-slate-700 px-2.5 sm:px-3.5 py-1.5 rounded-xl shrink-0 transition-colors shadow-2xs"
           >
             <label className="relative cursor-pointer flex items-center gap-1.5 group select-none">
               <CalendarIcon className="w-4 h-4 text-green-700 group-hover:scale-110 transition-transform shrink-0" />
@@ -236,12 +236,12 @@ export const DateNavigator: React.FC<DateNavigatorProps> = ({
                 className="opacity-0 absolute inset-0 w-full h-full cursor-pointer z-10"
                 title="Exibir calendário interativo"
               />
-              <span className="text-sm sm:text-base font-bold text-slate-900 font-mono tracking-tight whitespace-nowrap">
+              <span className="text-sm sm:text-base font-bold text-slate-900 dark:text-white font-mono tracking-tight whitespace-nowrap">
                 {formatDateBR(currentDate)}
               </span>
             </label>
-            <span className="text-slate-300">|</span>
-            <span className="text-xs sm:text-sm font-medium text-slate-600 capitalize whitespace-nowrap">
+            <span className="text-slate-300 dark:text-slate-600">|</span>
+            <span className="text-xs sm:text-sm font-medium text-slate-600 dark:text-slate-300 capitalize whitespace-nowrap">
               {formatDayOfWeek(currentDate)}
             </span>
 
@@ -258,7 +258,7 @@ export const DateNavigator: React.FC<DateNavigatorProps> = ({
                 <div
                   ref={popoverRef}
                   onClick={(e) => e.stopPropagation()}
-                  className="bg-white rounded-2xl shadow-2xl border border-slate-200 p-3.5 sm:p-4 w-full max-w-[300px] sm:w-[310px] animate-in fade-in zoom-in-95 duration-150"
+                  className="bg-white dark:bg-slate-900 rounded-2xl shadow-2xl border border-slate-200 dark:border-slate-800 p-3.5 sm:p-4 w-full max-w-[300px] sm:w-[310px] animate-in fade-in zoom-in-95 duration-150 text-slate-900 dark:text-slate-100"
                 >
                 {/* Header: Month & Year with Navigation */}
                 <div className="flex items-center justify-between mb-3 pb-2 border-b border-slate-100">
@@ -269,11 +269,11 @@ export const DateNavigator: React.FC<DateNavigatorProps> = ({
                       handlePrevMonth();
                     }}
                     title="Mês anterior"
-                    className="p-1 rounded-lg text-slate-600 hover:text-green-800 hover:bg-slate-100 transition-colors cursor-pointer"
+                    className="p-1 rounded-lg text-slate-600 dark:text-slate-300 hover:text-green-800 dark:hover:text-green-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors cursor-pointer"
                   >
                     <ChevronLeft className="w-4 h-4" />
                   </button>
-                  <span className="text-sm font-bold text-slate-800 select-none">
+                  <span className="text-sm font-bold text-slate-800 dark:text-slate-100 select-none">
                     {MONTH_NAMES[viewMonth]} {viewYear}
                   </span>
                   <button
@@ -283,7 +283,7 @@ export const DateNavigator: React.FC<DateNavigatorProps> = ({
                       handleNextMonth();
                     }}
                     title="Próximo mês"
-                    className="p-1 rounded-lg text-slate-600 hover:text-green-800 hover:bg-slate-100 transition-colors cursor-pointer"
+                    className="p-1 rounded-lg text-slate-600 dark:text-slate-300 hover:text-green-800 dark:hover:text-green-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors cursor-pointer"
                   >
                     <ChevronRight className="w-4 h-4" />
                   </button>
@@ -295,7 +295,7 @@ export const DateNavigator: React.FC<DateNavigatorProps> = ({
                     <span
                       key={name}
                       className={`text-[10px] font-bold uppercase tracking-wider ${
-                        i === 0 || i === 6 ? 'text-amber-600/80' : 'text-slate-400'
+                        i === 0 || i === 6 ? 'text-amber-600/80 dark:text-amber-400' : 'text-slate-400 dark:text-slate-500'
                       }`}
                     >
                       {name}
@@ -320,10 +320,10 @@ export const DateNavigator: React.FC<DateNavigatorProps> = ({
                           isSelected
                             ? 'bg-green-700 text-white shadow-xs font-bold'
                             : isCellToday
-                            ? 'bg-green-50 text-green-700 font-bold border border-green-300'
+                            ? 'bg-green-50 dark:bg-green-950/50 text-green-700 dark:text-green-300 font-bold border border-green-300 dark:border-green-800'
                             : !cell.isCurrentMonth
-                            ? 'text-slate-300 hover:bg-slate-50 hover:text-slate-500'
-                            : 'text-slate-700 hover:bg-green-50 hover:text-green-800'
+                            ? 'text-slate-300 dark:text-slate-600 hover:bg-slate-50 dark:hover:bg-slate-800/40'
+                            : 'text-slate-700 dark:text-slate-200 hover:bg-green-50 dark:hover:bg-slate-800 hover:text-green-800 dark:hover:text-green-300'
                         }`}
                       >
                         {cell.day}
@@ -333,14 +333,14 @@ export const DateNavigator: React.FC<DateNavigatorProps> = ({
                 </div>
 
                 {/* Footer Actions */}
-                <div className="flex items-center justify-between pt-2.5 mt-2.5 border-t border-slate-100 text-xs">
+                <div className="flex items-center justify-between pt-2.5 mt-2.5 border-t border-slate-100 dark:border-slate-800 text-xs">
                   <button
                     type="button"
                     onClick={(e) => {
                       e.stopPropagation();
                       handleSelectDay(today);
                     }}
-                    className="font-semibold text-green-700 hover:text-green-800 hover:underline cursor-pointer"
+                    className="font-semibold text-green-700 dark:text-green-400 hover:text-green-800 dark:hover:text-green-300 hover:underline cursor-pointer"
                   >
                     Ir para Hoje
                   </button>
@@ -350,7 +350,7 @@ export const DateNavigator: React.FC<DateNavigatorProps> = ({
                       e.stopPropagation();
                       setIsCalendarOpen(false);
                     }}
-                    className="text-slate-500 hover:text-slate-800 font-medium px-2 py-0.5 rounded-md hover:bg-slate-100 transition-colors cursor-pointer"
+                    className="text-slate-500 dark:text-slate-400 hover:text-slate-800 dark:hover:text-slate-200 font-medium px-2 py-0.5 rounded-md hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors cursor-pointer"
                   >
                     Fechar
                   </button>
@@ -362,13 +362,13 @@ export const DateNavigator: React.FC<DateNavigatorProps> = ({
         </div>
 
         {/* Center: Shift Filters */}
-        <div className="flex items-center bg-slate-100/90 p-1 rounded-xl text-xs font-medium text-slate-600 w-full sm:w-auto justify-center overflow-x-auto border border-slate-300/70">
+        <div className="flex items-center bg-slate-100/90 dark:bg-slate-800/90 p-1 rounded-xl text-xs font-medium text-slate-600 dark:text-slate-300 w-full sm:w-auto justify-center overflow-x-auto border border-slate-300/70 dark:border-slate-700">
           <button
             onClick={() => onPeriodFilterChange('all')}
             className={`px-2.5 sm:px-3 py-1.5 rounded-lg transition-all flex items-center gap-1 whitespace-nowrap cursor-pointer ${
               periodFilter === 'all'
-                ? 'bg-white text-green-800 font-semibold shadow-xs'
-                : 'hover:text-slate-900'
+                ? 'bg-white dark:bg-slate-700 text-green-800 dark:text-green-300 font-semibold shadow-xs'
+                : 'hover:text-slate-900 dark:hover:text-white'
             }`}
           >
             <Clock className="w-3.5 h-3.5 shrink-0" />
@@ -379,8 +379,8 @@ export const DateNavigator: React.FC<DateNavigatorProps> = ({
             onClick={() => onPeriodFilterChange('manha')}
             className={`px-2.5 sm:px-3 py-1.5 rounded-lg transition-all flex items-center gap-1 whitespace-nowrap cursor-pointer ${
               periodFilter === 'manha'
-                ? 'bg-white text-amber-700 font-semibold shadow-xs'
-                : 'hover:text-slate-900'
+                ? 'bg-white dark:bg-slate-700 text-amber-700 dark:text-amber-300 font-semibold shadow-xs'
+                : 'hover:text-slate-900 dark:hover:text-white'
             }`}
           >
             <Sun className="w-3.5 h-3.5 text-amber-500 shrink-0" />
@@ -391,8 +391,8 @@ export const DateNavigator: React.FC<DateNavigatorProps> = ({
             onClick={() => onPeriodFilterChange('tarde')}
             className={`px-2.5 sm:px-3 py-1.5 rounded-lg transition-all flex items-center gap-1 whitespace-nowrap cursor-pointer ${
               periodFilter === 'tarde'
-                ? 'bg-white text-orange-700 font-semibold shadow-xs'
-                : 'hover:text-slate-900'
+                ? 'bg-white dark:bg-slate-700 text-orange-700 dark:text-orange-300 font-semibold shadow-xs'
+                : 'hover:text-slate-900 dark:hover:text-white'
             }`}
           >
             <Sunset className="w-3.5 h-3.5 text-orange-500 shrink-0" />
@@ -402,13 +402,13 @@ export const DateNavigator: React.FC<DateNavigatorProps> = ({
         </div>
 
         {/* Right: View Switcher (Day / Week) */}
-        <div className="flex items-center bg-slate-100 p-1 rounded-xl w-full sm:w-auto justify-center border border-slate-300/70">
+        <div className="flex items-center bg-slate-100 dark:bg-slate-800 p-1 rounded-xl w-full sm:w-auto justify-center border border-slate-300/70 dark:border-slate-700">
           <button
             onClick={() => onViewModeChange('day')}
             className={`flex-1 sm:flex-initial px-3 py-1.5 text-xs font-semibold rounded-lg flex items-center justify-center gap-1.5 transition-all cursor-pointer ${
               viewMode === 'day'
-                ? 'bg-white text-slate-900 shadow-xs'
-                : 'text-slate-600 hover:text-slate-900'
+                ? 'bg-white dark:bg-slate-700 text-slate-900 dark:text-white shadow-xs'
+                : 'text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white'
             }`}
           >
             <LayoutGrid className="w-3.5 h-3.5" />
@@ -418,8 +418,8 @@ export const DateNavigator: React.FC<DateNavigatorProps> = ({
             onClick={() => onViewModeChange('week')}
             className={`flex-1 sm:flex-initial px-3 py-1.5 text-xs font-semibold rounded-lg flex items-center justify-center gap-1.5 transition-all cursor-pointer ${
               viewMode === 'week'
-                ? 'bg-white text-slate-900 shadow-xs'
-                : 'text-slate-600 hover:text-slate-900'
+                ? 'bg-white dark:bg-slate-700 text-slate-900 dark:text-white shadow-xs'
+                : 'text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white'
             }`}
           >
             <CalendarDays className="w-3.5 h-3.5" />

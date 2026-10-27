@@ -45,38 +45,38 @@ export const AuthModal: React.FC<AuthModalProps> = ({
 
   return (
     <div className="fixed inset-0 z-50 overflow-y-auto bg-slate-900/60 backdrop-blur-xs flex items-center justify-center p-4">
-      <div className="bg-white rounded-2xl max-w-md w-full p-6 shadow-2xl border border-slate-200">
-        <div className="flex items-center justify-between pb-3 border-b border-slate-100 mb-4">
+      <div className="bg-white dark:bg-slate-900 rounded-2xl max-w-md w-full p-6 shadow-2xl border border-slate-200 dark:border-slate-800 transition-colors">
+        <div className="flex items-center justify-between pb-3 border-b border-slate-100 dark:border-slate-800 mb-4">
           <div className="flex items-center gap-2">
-            <div className="w-10 h-10 rounded-xl bg-green-100 text-green-800 flex items-center justify-center">
+            <div className="w-10 h-10 rounded-xl bg-green-100 dark:bg-green-950/60 text-green-800 dark:text-green-400 flex items-center justify-center">
               <LogIn className="w-5 h-5" />
             </div>
             <div>
-              <h3 className="text-base font-bold text-slate-900">{actionTitle}</h3>
-              <p className="text-xs text-slate-500">Escola Prof. Terezinha Bezerra Siqueira</p>
+              <h3 className="text-base font-bold text-slate-900 dark:text-slate-100">{actionTitle}</h3>
+              <p className="text-xs text-slate-500 dark:text-slate-400">Escola Prof. Terezinha Bezerra Siqueira</p>
             </div>
           </div>
           <button
             onClick={onClose}
-            className="p-1.5 text-slate-400 hover:text-slate-600 rounded-lg hover:bg-slate-100"
+            className="p-1.5 text-slate-400 hover:text-slate-600 dark:hover:text-slate-300 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 cursor-pointer"
           >
             <X className="w-5 h-5" />
           </button>
         </div>
 
         <div className="space-y-4">
-          <p className="text-xs text-slate-600 leading-relaxed">
+          <p className="text-xs text-slate-600 dark:text-slate-300 leading-relaxed">
             {actionDescription}
           </p>
 
-          <div className="p-3 bg-green-50/80 border border-green-100 rounded-xl flex items-center gap-2.5 text-green-800 text-xs">
-            <ShieldCheck className="w-4 h-4 text-green-700 shrink-0" />
+          <div className="p-3 bg-green-50/80 dark:bg-green-950/30 border border-green-100 dark:border-green-800/60 rounded-xl flex items-center gap-2.5 text-green-800 dark:text-green-300 text-xs">
+            <ShieldCheck className="w-4 h-4 text-green-700 dark:text-green-400 shrink-0" />
             <span>Acesso seguro com autenticação oficial Google para professores e bolsistas.</span>
           </div>
 
           {errorMessage && (
-            <div className="p-3 bg-amber-50 border border-amber-200 rounded-xl text-amber-800 text-xs flex items-start gap-2">
-              <AlertCircle className="w-4 h-4 text-amber-600 shrink-0 mt-0.5" />
+            <div className="p-3 bg-amber-50 dark:bg-amber-950/40 border border-amber-200 dark:border-amber-800/80 rounded-xl text-amber-800 dark:text-amber-200 text-xs flex items-start gap-2">
+              <AlertCircle className="w-4 h-4 text-amber-600 dark:text-amber-400 shrink-0 mt-0.5" />
               <span>{errorMessage}</span>
             </div>
           )}
@@ -85,10 +85,10 @@ export const AuthModal: React.FC<AuthModalProps> = ({
             <button
               onClick={handleSignIn}
               disabled={isLoading}
-              className="w-full flex items-center justify-center gap-3 py-3 px-4 bg-white hover:bg-slate-50 text-slate-800 font-semibold text-sm rounded-xl border border-slate-300 hover:border-slate-400 shadow-sm transition-all active:scale-98 disabled:opacity-60 cursor-pointer"
+              className="w-full flex items-center justify-center gap-3 py-3 px-4 bg-white dark:bg-slate-800 hover:bg-slate-50 dark:hover:bg-slate-750 text-slate-800 dark:text-slate-100 font-semibold text-sm rounded-xl border border-slate-300 dark:border-slate-700 hover:border-slate-400 shadow-sm transition-all active:scale-98 disabled:opacity-60 cursor-pointer"
             >
               {isLoading ? (
-                <div className="w-5 h-5 border-2 border-green-700 border-t-transparent rounded-full animate-spin" />
+                <div className="w-5 h-5 border-2 border-green-700 dark:border-green-400 border-t-transparent rounded-full animate-spin" />
               ) : (
                 <svg className="w-5 h-5" viewBox="0 0 24 24">
                   <path
@@ -116,7 +116,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({
           <div className="flex justify-end pt-2">
             <button
               onClick={onClose}
-              className="text-xs text-slate-500 hover:text-slate-700 py-1 px-3"
+              className="text-xs text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 py-1 px-3 cursor-pointer"
             >
               Agora não
             </button>
