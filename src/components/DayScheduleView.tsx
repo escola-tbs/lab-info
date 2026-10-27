@@ -89,23 +89,23 @@ export const DayScheduleView: React.FC<DayScheduleViewProps> = ({
         key={slot.id}
         className={`rounded-xl border transition-all duration-200 overflow-hidden ${
           isPast
-            ? 'bg-slate-50/80 dark:bg-slate-900/60 border-slate-300/70 dark:border-slate-800 opacity-90'
+            ? 'bg-slate-50/80 border-slate-300/70 opacity-90'
             : isFullyOccupied
-            ? 'bg-red-50/30 dark:bg-red-950/20 border-red-300/75 dark:border-red-900/60 shadow-xs'
+            ? 'bg-red-50/30 border-red-300/75 shadow-xs'
             : isFullyFree
-            ? 'bg-white dark:bg-slate-900 border-emerald-300/75 dark:border-emerald-600/40 hover:border-emerald-400/80 shadow-xs'
-            : 'bg-amber-50/30 dark:bg-amber-950/20 border-amber-300/75 dark:border-amber-900/60 shadow-xs'
+            ? 'bg-white border-emerald-300/75 hover:border-emerald-400/80 shadow-xs'
+            : 'bg-amber-50/30 border-amber-300/75 shadow-xs'
         }`}
       >
         {/* Slot Header */}
-        <div className="px-3 sm:px-4 py-2 sm:py-3 bg-slate-50/90 dark:bg-slate-800/80 border-b border-slate-200/80 dark:border-slate-800 flex items-center justify-between gap-1.5 sm:gap-2">
+        <div className="px-3 sm:px-4 py-2 sm:py-3 bg-slate-50/90 border-b border-slate-200/80 flex items-center justify-between gap-1.5 sm:gap-2">
           <div className="flex items-center gap-1.5 sm:gap-2.5 min-w-0">
-            <span className="w-6 h-6 sm:w-7 sm:h-7 rounded-md sm:rounded-lg bg-green-100 dark:bg-green-950/70 text-green-800 dark:text-green-300 flex items-center justify-center font-bold text-[11px] sm:text-xs shrink-0">
+            <span className="w-6 h-6 sm:w-7 sm:h-7 rounded-md sm:rounded-lg bg-green-100 text-green-800 flex items-center justify-center font-bold text-[11px] sm:text-xs shrink-0">
               {slot.order}º
             </span>
             <div className="min-w-0 flex items-baseline gap-1 sm:gap-2 flex-wrap sm:flex-nowrap">
-              <span className="text-xs sm:text-sm font-bold text-slate-800 dark:text-slate-100 truncate">Horário</span>
-              <span className="text-[10px] sm:text-xs text-slate-500 dark:text-slate-400 font-mono whitespace-nowrap">{slot.displayTime}</span>
+              <span className="text-xs sm:text-sm font-bold text-slate-800 truncate">Horário</span>
+              <span className="text-[10px] sm:text-xs text-slate-500 font-mono whitespace-nowrap">{slot.displayTime}</span>
             </div>
           </div>
 
@@ -161,22 +161,22 @@ export const DayScheduleView: React.FC<DayScheduleViewProps> = ({
           <div
             className={`p-3 rounded-lg border flex flex-col justify-between ${
               isLabOccupied
-                ? 'bg-white dark:bg-slate-900 border-red-200 dark:border-red-900/50 shadow-2xs'
-                : 'bg-emerald-50/50 dark:bg-emerald-950/20 border-emerald-200/60 dark:border-emerald-900/30'
+                ? 'bg-white border-red-200 shadow-2xs'
+                : 'bg-emerald-50/50 border-emerald-200/60'
             }`}
           >
             <div>
               <div className="flex items-center justify-between mb-1.5">
-                <span className="text-xs font-bold text-slate-700 dark:text-slate-200 flex items-center gap-1.5">
-                  <MonitorCheck className="w-4 h-4 text-slate-600 dark:text-slate-400" />
+                <span className="text-xs font-bold text-slate-700 flex items-center gap-1.5">
+                  <MonitorCheck className="w-4 h-4 text-slate-600" />
                   Espaço do Laboratório
                 </span>
                 {isLabOccupied ? (
-                  <span className="text-[11px] font-bold px-2 py-0.5 rounded-full bg-red-100 dark:bg-red-950/60 text-red-800 dark:text-red-300 flex items-center gap-1">
+                  <span className="text-[11px] font-bold px-2 py-0.5 rounded-full bg-red-100 text-red-800 flex items-center gap-1">
                     <Lock className="w-3 h-3" /> Reservado
                   </span>
                 ) : (
-                  <span className="text-[11px] font-bold px-2 py-0.5 rounded-full bg-emerald-100 dark:bg-emerald-950/60 text-emerald-800 dark:text-emerald-300 flex items-center gap-1">
+                  <span className="text-[11px] font-bold px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800 flex items-center gap-1">
                     <CheckCircle2 className="w-3 h-3" /> Livre
                   </span>
                 )}
@@ -184,30 +184,30 @@ export const DayScheduleView: React.FC<DayScheduleViewProps> = ({
 
               {labRes ? (
                 <div className="mt-2 space-y-1 text-xs">
-                  <p className="font-semibold text-slate-900 dark:text-white flex items-center gap-1">
+                  <p className="font-semibold text-slate-900 flex items-center gap-1">
                     <UserIcon className="w-3.5 h-3.5 text-slate-400" />
                     {labRes.userName}
                   </p>
-                  <p className="text-slate-600 dark:text-slate-300 italic line-clamp-2">
+                  <p className="text-slate-600 italic line-clamp-2">
                     "{labRes.purpose}"
                   </p>
                   <div className="flex items-center gap-2 pt-1">
                     <span
                       className={`text-[10px] font-semibold px-1.5 py-0.5 rounded ${
                         labRes.status === 'confirmada'
-                          ? 'bg-emerald-100 dark:bg-emerald-950/60 text-emerald-800 dark:text-emerald-300'
-                          : 'bg-amber-100 dark:bg-amber-950/60 text-amber-800 dark:text-amber-300'
+                          ? 'bg-emerald-100 text-emerald-800'
+                          : 'bg-amber-100 text-amber-800'
                       }`}
                     >
                       Status: {labRes.status === 'confirmada' ? 'Confirmada' : 'Pendente'}
                     </span>
-                    <span className="text-[10px] text-slate-500 dark:text-slate-400">
+                    <span className="text-[10px] text-slate-500">
                       {labRes.resource === 'both' ? 'Uso com Chromebooks' : 'Apenas Laboratório'}
                     </span>
                   </div>
                 </div>
               ) : (
-                <p className="text-xs text-emerald-700 dark:text-emerald-300 mt-1">
+                <p className="text-xs text-emerald-700 mt-1">
                   Espaço físico disponível para aulas e atividades.
                 </p>
               )}
@@ -215,11 +215,11 @@ export const DayScheduleView: React.FC<DayScheduleViewProps> = ({
 
             {/* Negotiation / Action Button */}
             {labRes && (labRes.userId === currentUserId ? !isPast : !isBothBooked) && (
-              <div className="mt-3 pt-2 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between">
+              <div className="mt-3 pt-2 border-t border-slate-100 flex items-center justify-between">
                 {labRes.userId === currentUserId ? (
                   <button
                     onClick={() => onCancelReservation(labRes)}
-                    className="text-xs text-red-600 dark:text-red-400 hover:text-red-700 dark:hover:text-red-300 hover:underline font-medium cursor-pointer"
+                    className="text-xs text-red-600 hover:text-red-700 hover:underline font-medium cursor-pointer"
                   >
                     Cancelar minha reserva
                   </button>
@@ -240,22 +240,22 @@ export const DayScheduleView: React.FC<DayScheduleViewProps> = ({
           <div
             className={`p-3 rounded-lg border flex flex-col justify-between ${
               isChromeOccupied
-                ? 'bg-white dark:bg-slate-900 border-red-200 dark:border-red-900/50 shadow-2xs'
-                : 'bg-emerald-50/50 dark:bg-emerald-950/20 border-emerald-200/60 dark:border-emerald-900/30'
+                ? 'bg-white border-red-200 shadow-2xs'
+                : 'bg-emerald-50/50 border-emerald-200/60'
             }`}
           >
             <div>
               <div className="flex items-center justify-between mb-1.5">
-                <span className="text-xs font-bold text-slate-700 dark:text-slate-200 flex items-center gap-1.5">
-                  <Laptop className="w-4 h-4 text-slate-600 dark:text-slate-400" />
+                <span className="text-xs font-bold text-slate-700 flex items-center gap-1.5">
+                  <Laptop className="w-4 h-4 text-slate-600" />
                   Carrinho de Chromebooks
                 </span>
                 {isChromeOccupied ? (
-                  <span className="text-[11px] font-bold px-2 py-0.5 rounded-full bg-red-100 dark:bg-red-950/60 text-red-800 dark:text-red-300 flex items-center gap-1">
+                  <span className="text-[11px] font-bold px-2 py-0.5 rounded-full bg-red-100 text-red-800 flex items-center gap-1">
                     <Lock className="w-3 h-3" /> Reservado
                   </span>
                 ) : (
-                  <span className="text-[11px] font-bold px-2 py-0.5 rounded-full bg-emerald-100 dark:bg-emerald-950/60 text-emerald-800 dark:text-emerald-300 flex items-center gap-1">
+                  <span className="text-[11px] font-bold px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800 flex items-center gap-1">
                     <CheckCircle2 className="w-3 h-3" /> Livre
                   </span>
                 )}
@@ -263,19 +263,19 @@ export const DayScheduleView: React.FC<DayScheduleViewProps> = ({
 
               {chromeRes ? (
                 <div className="mt-2 space-y-1 text-xs">
-                  <p className="font-semibold text-slate-900 dark:text-white flex items-center gap-1">
+                  <p className="font-semibold text-slate-900 flex items-center gap-1">
                     <UserIcon className="w-3.5 h-3.5 text-slate-400" />
                     {chromeRes.userName}
                   </p>
-                  <p className="text-slate-600 dark:text-slate-300 italic line-clamp-2">
+                  <p className="text-slate-600 italic line-clamp-2">
                     "{chromeRes.purpose}"
                   </p>
                   <div className="flex items-center gap-2 pt-1">
                     <span
                       className={`text-[10px] font-semibold px-1.5 py-0.5 rounded ${
                         chromeRes.status === 'confirmada'
-                          ? 'bg-emerald-100 dark:bg-emerald-950/60 text-emerald-800 dark:text-emerald-300'
-                          : 'bg-amber-100 dark:bg-amber-950/60 text-amber-800 dark:text-amber-300'
+                          ? 'bg-emerald-100 text-emerald-800'
+                          : 'bg-amber-100 text-amber-800'
                       }`}
                     >
                       Status: {chromeRes.status === 'confirmada' ? 'Confirmada' : 'Pendente'}
@@ -322,12 +322,12 @@ export const DayScheduleView: React.FC<DayScheduleViewProps> = ({
   const renderBreakCard = (label: string, time: string) => (
     <div
       key={`break-${time}`}
-      className="bg-amber-50/80 dark:bg-amber-950/20 border border-dashed border-amber-400 dark:border-amber-700/60 rounded-xl p-3 flex items-center justify-center gap-2 text-amber-900 dark:text-amber-200 transition-colors"
+      className="bg-amber-50/80 border border-dashed border-amber-400 rounded-xl p-3 flex items-center justify-center gap-2 text-amber-900"
     >
-      <Coffee className="w-4 h-4 text-amber-600 dark:text-amber-400" />
+      <Coffee className="w-4 h-4 text-amber-600" />
       <span className="text-xs font-bold uppercase tracking-wider">{label}</span>
       <span className="text-xs font-mono font-semibold">({time})</span>
-      <span className="text-[11px] text-amber-700 dark:text-amber-300 font-medium hidden sm:inline">
+      <span className="text-[11px] text-amber-700 font-medium hidden sm:inline">
         • Horário exclusivo de recreio (não reservável)
       </span>
     </div>
@@ -337,20 +337,20 @@ export const DayScheduleView: React.FC<DayScheduleViewProps> = ({
     <div className="space-y-8">
       {/* Morning Shift */}
       {(periodFilter === 'all' || periodFilter === 'manha') && (
-        <section className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200/80 dark:border-slate-800 shadow-xs p-5 sm:p-6 transition-colors">
-          <div className="flex items-center justify-between border-b border-slate-100 dark:border-slate-800 pb-4 mb-5">
+        <section className="bg-white rounded-2xl border border-slate-200/80 shadow-xs p-5 sm:p-6">
+          <div className="flex items-center justify-between border-b border-slate-100 pb-4 mb-5">
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-xl bg-amber-100 dark:bg-amber-950/60 text-amber-700 dark:text-amber-400 flex items-center justify-center font-bold">
+              <div className="w-10 h-10 rounded-xl bg-amber-100 text-amber-700 flex items-center justify-center font-bold">
                 M
               </div>
               <div>
-                <h2 className="text-lg font-bold text-slate-900 dark:text-slate-100">Turno da Manhã</h2>
-                <p className="text-xs text-slate-500 dark:text-slate-400">07:00 às 12:00 • 6 Horários Letivos</p>
+                <h2 className="text-lg font-bold text-slate-900">Turno da Manhã</h2>
+                <p className="text-xs text-slate-500">07:00 às 12:00 • 6 Horários Letivos</p>
               </div>
             </div>
             <button
               onClick={() => onOpenBooking(undefined, 'manha')}
-              className="text-xs font-semibold text-green-700 dark:text-green-400 hover:text-green-800 dark:hover:text-green-300 hover:underline flex items-center gap-1 cursor-pointer"
+              className="text-xs font-semibold text-green-700 hover:text-green-800 hover:underline flex items-center gap-1"
             >
               <Plus className="w-4 h-4" />
               Reservar na Manhã
@@ -367,20 +367,20 @@ export const DayScheduleView: React.FC<DayScheduleViewProps> = ({
 
       {/* Afternoon Shift */}
       {(periodFilter === 'all' || periodFilter === 'tarde') && (
-        <section className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200/80 dark:border-slate-800 shadow-xs p-5 sm:p-6 transition-colors">
-          <div className="flex items-center justify-between border-b border-slate-100 dark:border-slate-800 pb-4 mb-5">
+        <section className="bg-white rounded-2xl border border-slate-200/80 shadow-xs p-5 sm:p-6">
+          <div className="flex items-center justify-between border-b border-slate-100 pb-4 mb-5">
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-xl bg-orange-100 dark:bg-orange-950/60 text-orange-700 dark:text-orange-400 flex items-center justify-center font-bold">
+              <div className="w-10 h-10 rounded-xl bg-orange-100 text-orange-700 flex items-center justify-center font-bold">
                 T
               </div>
               <div>
-                <h2 className="text-lg font-bold text-slate-900 dark:text-slate-100">Turno da Tarde</h2>
-                <p className="text-xs text-slate-500 dark:text-slate-400">13:30 às 18:30 • 6 Horários Letivos</p>
+                <h2 className="text-lg font-bold text-slate-900">Turno da Tarde</h2>
+                <p className="text-xs text-slate-500">13:30 às 18:30 • 6 Horários Letivos</p>
               </div>
             </div>
             <button
               onClick={() => onOpenBooking(undefined, 'tarde')}
-              className="text-xs font-semibold text-green-700 dark:text-green-400 hover:text-green-800 dark:hover:text-green-300 hover:underline flex items-center gap-1 cursor-pointer"
+              className="text-xs font-semibold text-green-700 hover:text-green-800 hover:underline flex items-center gap-1"
             >
               <Plus className="w-4 h-4" />
               Reservar na Tarde
