@@ -300,14 +300,9 @@ export const DateNavigator: React.FC<DateNavigatorProps> = ({
                     >
                       <ChevronLeft className="w-4 h-4" />
                     </button>
-                    <div className="text-center">
-                      <span className="text-sm font-bold text-slate-800 block">
-                        {MONTH_NAMES[viewMonth]} {viewYear}
-                      </span>
-                      <span className="text-[10px] text-slate-400 font-medium block">
-                        ← Deslize para trocar de mês →
-                      </span>
-                    </div>
+                    <span className="text-sm font-bold text-slate-800 select-none">
+                      {MONTH_NAMES[viewMonth]} {viewYear}
+                    </span>
                     <button
                       type="button"
                       onClick={(e) => {
