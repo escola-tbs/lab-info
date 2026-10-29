@@ -52,7 +52,9 @@ export const DateNavigator: React.FC<DateNavigatorProps> = ({
   const [isCalendarOpen, setIsCalendarOpen] = useState(false);
   const triggerRef = useRef<HTMLDivElement>(null);
   const popoverRef = useRef<HTMLDivElement>(null);
-  const dateInputRef = useRef<HTMLInputElement>(null);
+  const touchStartXRef = useRef<number | null>(null);
+  const touchStartYRef = useRef<number | null>(null);
+  const [slideDirection, setSlideDirection] = useState<'left' | 'right' | null>(null);
 
   // Month & year for calendar popover view
   const [viewYear, setViewYear] = useState(() => {
@@ -109,6 +111,7 @@ export const DateNavigator: React.FC<DateNavigatorProps> = ({
   }, [isCalendarOpen]);
 
   const handlePrevMonth = () => {
+    setSlideDirection('right');
     setViewMonth((prev) => {
       if (prev === 0) {
         setViewYear((y) => y - 1);
@@ -116,9 +119,11 @@ export const DateNavigator: React.FC<DateNavigatorProps> = ({
       }
       return prev - 1;
     });
+    setTimeout(() => setSlideDirection(null), 250);
   };
 
   const handleNextMonth = () => {
+    setSlideDirection('left');
     setViewMonth((prev) => {
       if (prev === 11) {
         setViewYear((y) => y + 1);
@@ -126,6 +131,37 @@ export const DateNavigator: React.FC<DateNavigatorProps> = ({
       }
       return prev + 1;
     });
+    setTimeout(() => setSlideDirection(null), 250);
+  };
+
+  const handleTouchStart = (e: React.TouchEvent) => {
+    if (e.touches.length === 1) {
+      touchStartXRef.current = e.touches[0].clientX;
+      touchStartYRef.current = e.touches[0].clientY;
+    }
+  };
+
+  const handleTouchEnd = (e: React.TouchEvent) => {
+    if (touchStartXRef.current === null || touchStartYRef.current === null) return;
+    if (e.changedTouches.length === 1) {
+      const endX = e.changedTouches[0].clientX;
+      const endY = e.changedTouches[0].clientY;
+      const deltaX = endX - touchStartXRef.current;
+      const deltaY = endY - touchStartYRef.current;
+
+      // Minimum swipe distance of 35px and more horizontal than vertical
+      if (Math.abs(deltaX) > 35 && Math.abs(deltaX) > Math.abs(deltaY) * 1.1) {
+        if (deltaX < 0) {
+          // Swiped left -> next month
+          handleNextMonth();
+        } else {
+          // Swiped right -> previous month
+          handlePrevMonth();
+        }
+      }
+    }
+    touchStartXRef.current = null;
+    touchStartYRef.current = null;
   };
 
   const handleSelectDay = (dateStr: string) => {
@@ -217,38 +253,26 @@ export const DateNavigator: React.FC<DateNavigatorProps> = ({
             ref={triggerRef}
             className="relative flex items-center gap-2 sm:gap-3 bg-slate-50 hover:bg-slate-100/70 border border-slate-300 px-2.5 sm:px-3.5 py-1.5 rounded-xl shrink-0 transition-colors shadow-2xs"
           >
-            <label className="relative cursor-pointer flex items-center gap-1.5 group select-none">
+            <button
+              type="button"
+              onClick={() => setIsCalendarOpen((prev) => !prev)}
+              className="flex items-center gap-1.5 group select-none cursor-pointer focus:outline-hidden"
+              title="Abrir calendário interativo"
+            >
               <CalendarIcon className="w-4 h-4 text-green-700 group-hover:scale-110 transition-transform shrink-0" />
-              <input
-                ref={dateInputRef}
-                type="date"
-                value={currentDate}
-                onChange={(e) => {
-                  if (e.target.value) {
-                    onDateChange(e.target.value);
-                    setIsCalendarOpen(false);
-                  }
-                }}
-                onClick={(e) => {
-                  e.stopPropagation();
-                  setIsCalendarOpen((prev) => !prev);
-                }}
-                className="opacity-0 absolute inset-0 w-full h-full cursor-pointer z-10"
-                title="Exibir calendário interativo"
-              />
-              <span className="text-sm sm:text-base font-bold text-slate-900 font-mono tracking-tight whitespace-nowrap">
+              <span className="text-sm sm:text-base font-bold text-slate-900 font-mono tracking-tight whitespace-nowrap group-hover:text-green-800 transition-colors">
                 {formatDateBR(currentDate)}
               </span>
-            </label>
+            </button>
             <span className="text-slate-300">|</span>
             <span className="text-xs sm:text-sm font-medium text-slate-600 capitalize whitespace-nowrap">
               {formatDayOfWeek(currentDate)}
             </span>
 
-            {/* Interactive Calendar Popover */}
+            {/* Interactive Calendar Modal with Swipe Support */}
             {isCalendarOpen && (
               <div
-                className="fixed inset-0 z-50 flex items-center justify-center p-3 bg-slate-900/40 backdrop-blur-2xs sm:bg-transparent sm:backdrop-blur-none sm:p-0 sm:inset-auto sm:absolute sm:top-full sm:left-0 sm:mt-2 sm:block"
+                className="fixed inset-0 z-50 flex items-center justify-center p-3 bg-slate-900/40 backdrop-blur-2xs"
                 onClick={(e) => {
                   if (e.target === e.currentTarget) {
                     setIsCalendarOpen(false);
@@ -258,106 +282,123 @@ export const DateNavigator: React.FC<DateNavigatorProps> = ({
                 <div
                   ref={popoverRef}
                   onClick={(e) => e.stopPropagation()}
-                  className="bg-white rounded-2xl shadow-2xl border border-slate-200 p-3.5 sm:p-4 w-full max-w-[300px] sm:w-[310px] animate-in fade-in zoom-in-95 duration-150"
+                  onTouchStart={handleTouchStart}
+                  onTouchEnd={handleTouchEnd}
+                  className="bg-white rounded-2xl shadow-2xl border border-slate-200 p-4 w-full max-w-[320px] animate-in fade-in zoom-in-95 duration-150 select-none touch-pan-y"
                 >
-                {/* Header: Month & Year with Navigation */}
-                <div className="flex items-center justify-between mb-3 pb-2 border-b border-slate-100">
-                  <button
-                    type="button"
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      handlePrevMonth();
-                    }}
-                    title="Mês anterior"
-                    className="p-1 rounded-lg text-slate-600 hover:text-green-800 hover:bg-slate-100 transition-colors cursor-pointer"
-                  >
-                    <ChevronLeft className="w-4 h-4" />
-                  </button>
-                  <span className="text-sm font-bold text-slate-800 select-none">
-                    {MONTH_NAMES[viewMonth]} {viewYear}
-                  </span>
-                  <button
-                    type="button"
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      handleNextMonth();
-                    }}
-                    title="Próximo mês"
-                    className="p-1 rounded-lg text-slate-600 hover:text-green-800 hover:bg-slate-100 transition-colors cursor-pointer"
-                  >
-                    <ChevronRight className="w-4 h-4" />
-                  </button>
-                </div>
-
-                {/* Weekday Labels */}
-                <div className="grid grid-cols-7 gap-1 mb-1 text-center">
-                  {WEEKDAY_NAMES.map((name, i) => (
-                    <span
-                      key={name}
-                      className={`text-[10px] font-bold uppercase tracking-wider ${
-                        i === 0 || i === 6 ? 'text-amber-600/80' : 'text-slate-400'
-                      }`}
+                  {/* Header: Month & Year with Navigation & Swipe Hint */}
+                  <div className="flex items-center justify-between mb-2.5 pb-2 border-b border-slate-100">
+                    <button
+                      type="button"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        handlePrevMonth();
+                      }}
+                      title="Mês anterior"
+                      aria-label="Mês anterior"
+                      className="p-1.5 rounded-lg text-slate-600 hover:text-green-800 hover:bg-slate-100 transition-colors cursor-pointer"
                     >
-                      {name}
-                    </span>
-                  ))}
-                </div>
+                      <ChevronLeft className="w-4 h-4" />
+                    </button>
+                    <div className="text-center">
+                      <span className="text-sm font-bold text-slate-800 block">
+                        {MONTH_NAMES[viewMonth]} {viewYear}
+                      </span>
+                      <span className="text-[10px] text-slate-400 font-medium block">
+                        ← Deslize para trocar de mês →
+                      </span>
+                    </div>
+                    <button
+                      type="button"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        handleNextMonth();
+                      }}
+                      title="Próximo mês"
+                      aria-label="Próximo mês"
+                      className="p-1.5 rounded-lg text-slate-600 hover:text-green-800 hover:bg-slate-100 transition-colors cursor-pointer"
+                    >
+                      <ChevronRight className="w-4 h-4" />
+                    </button>
+                  </div>
 
-                {/* Day Grid */}
-                <div className="grid grid-cols-7 gap-1 text-center">
-                  {calendarCells.map((cell, idx) => {
-                    const isSelected = cell.dateStr === currentDate;
-                    const isCellToday = cell.dateStr === today;
-                    return (
-                      <button
-                        key={`${cell.dateStr}-${idx}`}
-                        type="button"
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          handleSelectDay(cell.dateStr);
-                        }}
-                        className={`h-8 w-8 sm:h-9 sm:w-9 mx-auto rounded-lg text-xs font-semibold flex items-center justify-center transition-all cursor-pointer ${
-                          isSelected
-                            ? 'bg-green-700 text-white shadow-xs font-bold'
-                            : isCellToday
-                            ? 'bg-green-50 text-green-700 font-bold border border-green-300'
-                            : !cell.isCurrentMonth
-                            ? 'text-slate-300 hover:bg-slate-50 hover:text-slate-500'
-                            : 'text-slate-700 hover:bg-green-50 hover:text-green-800'
+                  {/* Weekday Labels */}
+                  <div className="grid grid-cols-7 gap-1 mb-1 text-center">
+                    {WEEKDAY_NAMES.map((name, i) => (
+                      <span
+                        key={name}
+                        className={`text-[10px] font-bold uppercase tracking-wider ${
+                          i === 0 || i === 6 ? 'text-amber-600/80' : 'text-slate-400'
                         }`}
                       >
-                        {cell.day}
-                      </button>
-                    );
-                  })}
-                </div>
+                        {name}
+                      </span>
+                    ))}
+                  </div>
 
-                {/* Footer Actions */}
-                <div className="flex items-center justify-between pt-2.5 mt-2.5 border-t border-slate-100 text-xs">
-                  <button
-                    type="button"
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      handleSelectDay(today);
-                    }}
-                    className="font-semibold text-green-700 hover:text-green-800 hover:underline cursor-pointer"
+                  {/* Day Grid with smooth transition */}
+                  <div
+                    className={`grid grid-cols-7 gap-1 text-center transition-all duration-200 ${
+                      slideDirection === 'left'
+                        ? 'translate-x-1 opacity-70'
+                        : slideDirection === 'right'
+                        ? '-translate-x-1 opacity-70'
+                        : 'translate-x-0 opacity-100'
+                    }`}
                   >
-                    Ir para Hoje
-                  </button>
-                  <button
-                    type="button"
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      setIsCalendarOpen(false);
-                    }}
-                    className="text-slate-500 hover:text-slate-800 font-medium px-2 py-0.5 rounded-md hover:bg-slate-100 transition-colors cursor-pointer"
-                  >
-                    Fechar
-                  </button>
+                    {calendarCells.map((cell, idx) => {
+                      const isSelected = cell.dateStr === currentDate;
+                      const isCellToday = cell.dateStr === today;
+                      return (
+                        <button
+                          key={`${cell.dateStr}-${idx}`}
+                          type="button"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            handleSelectDay(cell.dateStr);
+                          }}
+                          className={`h-8 w-8 sm:h-9 sm:w-9 mx-auto rounded-lg text-xs font-semibold flex items-center justify-center transition-all cursor-pointer ${
+                            isSelected
+                              ? 'bg-green-700 text-white shadow-xs font-bold scale-105'
+                              : isCellToday
+                              ? 'bg-green-50 text-green-700 font-bold border border-green-300'
+                              : !cell.isCurrentMonth
+                              ? 'text-slate-300 hover:bg-slate-50 hover:text-slate-500'
+                              : 'text-slate-700 hover:bg-green-50 hover:text-green-800'
+                          }`}
+                        >
+                          {cell.day}
+                        </button>
+                      );
+                    })}
+                  </div>
+
+                  {/* Footer Actions */}
+                  <div className="flex items-center justify-between pt-2.5 mt-2.5 border-t border-slate-100 text-xs">
+                    <button
+                      type="button"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        handleSelectDay(today);
+                      }}
+                      className="font-semibold text-green-700 hover:text-green-800 hover:underline cursor-pointer"
+                    >
+                      Ir para Hoje
+                    </button>
+                    <button
+                      type="button"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setIsCalendarOpen(false);
+                      }}
+                      className="text-slate-500 hover:text-slate-800 font-medium px-2 py-0.5 rounded-md hover:bg-slate-100 transition-colors cursor-pointer"
+                    >
+                      Fechar
+                    </button>
+                  </div>
                 </div>
               </div>
-            </div>
-          )}
+            )}
           </div>
         </div>
 
