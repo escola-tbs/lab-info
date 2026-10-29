@@ -269,55 +269,55 @@ export const AdminModal: React.FC<AdminModalProps> = ({
 
   return (
     <div className="fixed inset-0 z-50 overflow-y-auto bg-slate-900/60 backdrop-blur-xs flex items-center justify-center p-2 sm:p-4">
-      <div className="bg-white dark:bg-slate-900 rounded-2xl max-w-3xl w-full max-h-[92vh] overflow-y-auto overflow-x-hidden shadow-2xl border border-slate-200 dark:border-slate-800 transition-colors">
+      <div className="bg-white rounded-2xl max-w-3xl w-full max-h-[92vh] overflow-y-auto overflow-x-hidden shadow-2xl border border-slate-200">
         {/* Header */}
-        <div className="px-3.5 sm:px-6 py-3 sm:py-4 border-b border-slate-100 dark:border-slate-800 flex items-center justify-between sticky top-0 bg-white dark:bg-slate-900 z-10 transition-colors">
+        <div className="px-3.5 sm:px-6 py-3 sm:py-4 border-b border-slate-100 flex items-center justify-between sticky top-0 bg-white z-10">
           <div className="flex items-center gap-2 min-w-0">
-            <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-xl bg-amber-100 dark:bg-amber-950/60 text-amber-700 dark:text-amber-400 flex items-center justify-center font-bold shrink-0">
+            <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-xl bg-amber-100 text-amber-700 flex items-center justify-center font-bold shrink-0">
               <Shield className="w-5 h-5 sm:w-6 sm:h-6" />
             </div>
             <div className="min-w-0">
-              <h2 className="text-base sm:text-xl font-bold text-slate-900 dark:text-slate-100 truncate">
+              <h2 className="text-base sm:text-xl font-bold text-slate-900 truncate">
                 Painel Administrativo
               </h2>
-              <p className="text-[10px] sm:text-xs text-slate-500 dark:text-slate-400 truncate">
+              <p className="text-[10px] sm:text-xs text-slate-500 truncate">
                 Controle de segurança, aprovações e lista de administradores
               </p>
             </div>
           </div>
           <button
             onClick={onClose}
-            className="p-1.5 sm:p-2 text-slate-400 hover:text-slate-600 dark:hover:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg transition-colors shrink-0 cursor-pointer"
+            className="p-1.5 sm:p-2 text-slate-400 hover:text-slate-600 hover:bg-slate-100 rounded-lg transition-colors shrink-0"
           >
             <X className="w-5 h-5" />
           </button>
         </div>
 
         {/* Tab switcher */}
-        <div className="flex border-b border-slate-200 dark:border-slate-800 px-1 sm:px-6 bg-slate-50 dark:bg-slate-850 items-center justify-between sm:justify-start">
+        <div className="flex border-b border-slate-200 px-1 sm:px-6 bg-slate-50 items-center justify-between sm:justify-start">
           <button
             onClick={() => setActiveTab('settings')}
-            className={`flex-1 sm:flex-initial py-2 sm:py-3 px-1 sm:px-4 text-[10px] sm:text-xs font-bold border-b-2 transition-all whitespace-nowrap text-center cursor-pointer ${
+            className={`flex-1 sm:flex-initial py-2 sm:py-3 px-1 sm:px-4 text-[10px] sm:text-xs font-bold border-b-2 transition-all whitespace-nowrap text-center ${
               activeTab === 'settings'
-                ? 'border-green-700 dark:border-green-500 text-green-800 dark:text-green-400'
-                : 'border-transparent text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200'
+                ? 'border-green-700 text-green-800'
+                : 'border-transparent text-slate-500 hover:text-slate-700'
             }`}
           >
             Configurações
           </button>
           <button
             onClick={() => setActiveTab('admins')}
-            className={`flex-1 sm:flex-initial py-2 sm:py-3 px-1 sm:px-4 text-[10px] sm:text-xs font-bold border-b-2 transition-all whitespace-nowrap text-center cursor-pointer ${
+            className={`flex-1 sm:flex-initial py-2 sm:py-3 px-1 sm:px-4 text-[10px] sm:text-xs font-bold border-b-2 transition-all whitespace-nowrap text-center ${
               activeTab === 'admins'
-                ? 'border-green-700 dark:border-green-500 text-green-800 dark:text-green-400'
-                : 'border-transparent text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200'
+                ? 'border-green-700 text-green-800'
+                : 'border-transparent text-slate-500 hover:text-slate-700'
             }`}
           >
             Administradores
           </button>
           <button
             onClick={() => setActiveTab('reservations')}
-            className={`flex-1 sm:flex-initial py-2 sm:py-3 px-1 sm:px-4 text-[10px] sm:text-xs font-bold border-b-2 transition-all whitespace-nowrap text-center cursor-pointer ${
+            className={`flex-1 sm:flex-initial py-2 sm:py-3 px-1 sm:px-4 text-[10px] sm:text-xs font-bold border-b-2 transition-all whitespace-nowrap text-center ${
               activeTab === 'reservations'
                 ? 'border-green-700 text-green-800'
                 : 'border-transparent text-slate-500 hover:text-slate-700'

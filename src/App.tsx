@@ -39,7 +39,6 @@ import { ConfirmLogoutModal } from './components/ConfirmLogoutModal';
 import { PWAInstallButton } from './components/PWAInstallButton';
 import { ShareModal } from './components/ShareModal';
 import { useAdminNotification } from './hooks/useAdminNotification';
-import { useTheme } from './hooks/useTheme';
 
 import {
   CalendarCheck2,
@@ -59,8 +58,6 @@ interface CachedAuthUser {
 }
 
 export default function App() {
-  const { theme, toggleTheme } = useTheme();
-
   // Optimistic cached auth to eliminate login button flicker on page load
   const [cachedUser, setCachedUser] = useState<CachedAuthUser | null>(() => {
     try {
@@ -406,7 +403,7 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen bg-[#edf2f7] dark:bg-slate-950 text-slate-900 dark:text-slate-100 flex flex-col font-sans transition-colors duration-200">
+    <div className="min-h-screen bg-[#edf2f7] text-slate-900 flex flex-col font-sans">
       {/* Toast Notification */}
       {toastMessage && (
         <div className="fixed bottom-6 right-6 z-50 bg-slate-900 text-white px-5 py-3 rounded-xl shadow-xl flex items-center gap-3 border border-slate-700 animate-in fade-in slide-in-from-bottom-4">
@@ -419,8 +416,6 @@ export default function App() {
       <Header
         user={effectiveUser}
         isAdmin={isAdminUser}
-        theme={theme}
-        onToggleTheme={toggleTheme}
         onLogin={handleLogin}
         onRequestLogout={() => setIsLogoutModalOpen(true)}
         onOpenMyReservations={() => setIsMyReservationsModalOpen(true)}
@@ -501,7 +496,7 @@ export default function App() {
       </main>
 
       {/* Footer */}
-      <footer className="bg-white dark:bg-slate-900 border-t border-slate-300 dark:border-slate-800 py-4 sm:py-6 mt-12 text-slate-500 dark:text-slate-400 shadow-xs transition-colors duration-200">
+      <footer className="bg-white border-t border-slate-300 py-4 sm:py-6 mt-12 text-slate-500 shadow-xs">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col items-center justify-center gap-2.5">
           <div className="flex flex-nowrap items-center justify-center gap-1.5 sm:gap-2 text-center text-[10px] sm:text-xs whitespace-nowrap">
             <img
@@ -519,20 +514,20 @@ export default function App() {
             />
           </div>
 
-          <div className="flex flex-wrap items-center justify-center gap-2.5 sm:gap-3.5 text-[11px] text-slate-500 dark:text-slate-400">
+          <div className="flex flex-wrap items-center justify-center gap-2.5 sm:gap-3.5 text-[11px] text-slate-500">
             <button
               type="button"
               onClick={() => setIsShareModalOpen(true)}
-              className="hover:text-green-800 dark:hover:text-green-400 hover:underline cursor-pointer font-medium"
+              className="hover:text-green-800 hover:underline cursor-pointer font-medium"
             >
               Compartilhar App
             </button>
             <span>&bull;</span>
-            <a href="./sobre.html" className="hover:text-green-800 dark:hover:text-green-400 hover:underline font-medium">
+            <a href="./sobre.html" className="hover:text-green-800 hover:underline font-medium">
               Sobre o Sistema
             </a>
             <span>&bull;</span>
-            <a href="./privacidade.html" className="hover:text-green-800 dark:hover:text-green-400 hover:underline font-medium">
+            <a href="./privacidade.html" className="hover:text-green-800 hover:underline font-medium">
               Políticas de Privacidade
             </a>
           </div>
