@@ -52,7 +52,6 @@ export const DateNavigator: React.FC<DateNavigatorProps> = ({
   const [isCalendarOpen, setIsCalendarOpen] = useState(false);
   const triggerRef = useRef<HTMLDivElement>(null);
   const popoverRef = useRef<HTMLDivElement>(null);
-  const dateInputRef = useRef<HTMLInputElement>(null);
 
   // Month & year for calendar popover view
   const [viewYear, setViewYear] = useState(() => {
@@ -217,29 +216,17 @@ export const DateNavigator: React.FC<DateNavigatorProps> = ({
             ref={triggerRef}
             className="relative flex items-center gap-2 sm:gap-3 bg-slate-50 hover:bg-slate-100/70 border border-slate-300 px-2.5 sm:px-3.5 py-1.5 rounded-xl shrink-0 transition-colors shadow-2xs"
           >
-            <label className="relative cursor-pointer flex items-center gap-1.5 group select-none">
+            <button
+              type="button"
+              onClick={() => setIsCalendarOpen((prev) => !prev)}
+              className="relative cursor-pointer flex items-center gap-1.5 group select-none text-left bg-transparent border-none p-0 focus:outline-hidden"
+              title="Exibir calendário interativo"
+            >
               <CalendarIcon className="w-4 h-4 text-green-700 group-hover:scale-110 transition-transform shrink-0" />
-              <input
-                ref={dateInputRef}
-                type="date"
-                value={currentDate}
-                onChange={(e) => {
-                  if (e.target.value) {
-                    onDateChange(e.target.value);
-                    setIsCalendarOpen(false);
-                  }
-                }}
-                onClick={(e) => {
-                  e.stopPropagation();
-                  setIsCalendarOpen((prev) => !prev);
-                }}
-                className="opacity-0 absolute inset-0 w-full h-full cursor-pointer z-10"
-                title="Exibir calendário interativo"
-              />
               <span className="text-sm sm:text-base font-bold text-slate-900 font-mono tracking-tight whitespace-nowrap">
                 {formatDateBR(currentDate)}
               </span>
-            </label>
+            </button>
             <span className="text-slate-300">|</span>
             <span className="text-xs sm:text-sm font-medium text-slate-600 capitalize whitespace-nowrap">
               {formatDayOfWeek(currentDate)}
