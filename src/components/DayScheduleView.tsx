@@ -113,7 +113,7 @@ export const DayScheduleView: React.FC<DayScheduleViewProps> = ({
             {isPast && (
               <span className="inline-flex items-center gap-1 text-[10px] sm:text-[11px] font-medium px-1.5 sm:px-2 py-0.5 rounded-md bg-slate-200 text-slate-700 whitespace-nowrap">
                 <Clock className="w-2.5 h-2.5 sm:w-3 sm:h-3" />
-                Finalizado
+                Finalizada
               </span>
             )}
 
@@ -125,8 +125,7 @@ export const DayScheduleView: React.FC<DayScheduleViewProps> = ({
                 className="inline-flex items-center gap-0.5 sm:gap-1 text-[10px] sm:text-[11px] font-bold px-1.5 sm:px-2.5 py-0.5 sm:py-1 rounded-md bg-green-100 hover:bg-green-200 text-green-800 border border-green-300 transition-all cursor-pointer active:scale-95 shadow-2xs whitespace-nowrap"
               >
                 <Sparkles className="w-2.5 h-2.5 sm:w-3 sm:h-3 text-green-700" />
-                <span className="hidden xs:inline">Minha Reserva</span>
-                <span className="inline xs:hidden sm:inline">Minha Reserva</span>
+                <span>Minha Reserva</span>
               </button>
             )}
 
@@ -172,8 +171,15 @@ export const DayScheduleView: React.FC<DayScheduleViewProps> = ({
                   Espaço do Laboratório
                 </span>
                 {isLabOccupied ? (
-                  <span className="text-[11px] font-bold px-2 py-0.5 rounded-full bg-red-100 text-red-800 flex items-center gap-1">
-                    <Lock className="w-3 h-3" /> Reservado
+                  <span
+                    className={`text-[11px] font-bold px-2 py-0.5 rounded-full flex items-center gap-1 ${
+                      isPast
+                        ? 'bg-slate-100 text-slate-700 border border-slate-200'
+                        : 'bg-red-100 text-red-800'
+                    }`}
+                  >
+                    {isPast ? <Clock className="w-3 h-3 text-slate-500" /> : <Lock className="w-3 h-3" />}
+                    {isPast ? 'Finalizada' : 'Reservado'}
                   </span>
                 ) : (
                   <span className="text-[11px] font-bold px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800 flex items-center gap-1">
@@ -194,12 +200,14 @@ export const DayScheduleView: React.FC<DayScheduleViewProps> = ({
                   <div className="flex items-center gap-2 pt-1">
                     <span
                       className={`text-[10px] font-semibold px-1.5 py-0.5 rounded ${
-                        labRes.status === 'confirmada'
+                        isPast
+                          ? 'bg-slate-100 text-slate-700 border border-slate-200'
+                          : labRes.status === 'confirmada'
                           ? 'bg-emerald-100 text-emerald-800'
                           : 'bg-amber-100 text-amber-800'
                       }`}
                     >
-                      Status: {labRes.status === 'confirmada' ? 'Confirmada' : 'Pendente'}
+                      Status: {isPast ? 'Finalizada' : labRes.status === 'confirmada' ? 'Confirmada' : 'Pendente'}
                     </span>
                     <span className="text-[10px] text-slate-500">
                       {labRes.resource === 'both' ? 'Uso com Chromebooks' : 'Apenas Laboratório'}
@@ -214,7 +222,7 @@ export const DayScheduleView: React.FC<DayScheduleViewProps> = ({
             </div>
 
             {/* Negotiation / Action Button */}
-            {labRes && (labRes.userId === currentUserId ? !isPast : !isBothBooked) && (
+            {labRes && !isPast && (
               <div className="mt-3 pt-2 border-t border-slate-100 flex items-center justify-between">
                 {labRes.userId === currentUserId ? (
                   <button
@@ -251,8 +259,15 @@ export const DayScheduleView: React.FC<DayScheduleViewProps> = ({
                   Carrinho de Chromebooks
                 </span>
                 {isChromeOccupied ? (
-                  <span className="text-[11px] font-bold px-2 py-0.5 rounded-full bg-red-100 text-red-800 flex items-center gap-1">
-                    <Lock className="w-3 h-3" /> Reservado
+                  <span
+                    className={`text-[11px] font-bold px-2 py-0.5 rounded-full flex items-center gap-1 ${
+                      isPast
+                        ? 'bg-slate-100 text-slate-700 border border-slate-200'
+                        : 'bg-red-100 text-red-800'
+                    }`}
+                  >
+                    {isPast ? <Clock className="w-3 h-3 text-slate-500" /> : <Lock className="w-3 h-3" />}
+                    {isPast ? 'Finalizada' : 'Reservado'}
                   </span>
                 ) : (
                   <span className="text-[11px] font-bold px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800 flex items-center gap-1">
@@ -273,12 +288,14 @@ export const DayScheduleView: React.FC<DayScheduleViewProps> = ({
                   <div className="flex items-center gap-2 pt-1">
                     <span
                       className={`text-[10px] font-semibold px-1.5 py-0.5 rounded ${
-                        chromeRes.status === 'confirmada'
+                        isPast
+                          ? 'bg-slate-100 text-slate-700 border border-slate-200'
+                          : chromeRes.status === 'confirmada'
                           ? 'bg-emerald-100 text-emerald-800'
                           : 'bg-amber-100 text-amber-800'
                       }`}
                     >
-                      Status: {chromeRes.status === 'confirmada' ? 'Confirmada' : 'Pendente'}
+                      Status: {isPast ? 'Finalizada' : chromeRes.status === 'confirmada' ? 'Confirmada' : 'Pendente'}
                     </span>
                     <span className="text-[10px] text-slate-500">
                       {chromeRes.resource === 'both' ? 'Uso com Laboratório' : 'Apenas Chromebooks'}
@@ -293,7 +310,7 @@ export const DayScheduleView: React.FC<DayScheduleViewProps> = ({
             </div>
 
             {/* Negotiation / Action Button */}
-            {chromeRes && (chromeRes.userId === currentUserId ? (!isPast && !isBothBooked) : !isBothBooked) && (
+            {chromeRes && !isPast && (
               <div className="mt-3 pt-2 border-t border-slate-100 flex items-center justify-between">
                 {chromeRes.userId === currentUserId ? (
                   <button

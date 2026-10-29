@@ -138,7 +138,7 @@ export const MyReservationsModal: React.FC<MyReservationsModalProps> = ({
                               : 'bg-amber-100 text-amber-800'
                           }`}
                         >
-                          {isCancelled ? 'Cancelada' : isPast ? 'Concluída' : isConfirmed ? 'Confirmada' : 'Pendente'}
+                          {isCancelled ? 'Cancelada' : isPast ? 'Finalizada' : isConfirmed ? 'Confirmada' : 'Pendente'}
                         </span>
                       </div>
                     </div>
